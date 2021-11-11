@@ -5,18 +5,7 @@ import OrdersTable from './OrdersTable';
 import OrderDetailsTable from './OrderDetailsTable';
 import DeleteOrder from './DeleteOrder';
 
-const formatDate = (dateString) => {
-    const monthNames = ["January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"];
-    const dateObj = new Date(dateString);
-    const month = monthNames[dateObj.getMonth()];
-    const day = String(dateObj.getDate()).padStart(2, '0');
-    const year = dateObj.getFullYear();
-    const hours = dateObj.getHours();
-    const minutes = dateObj.getMinutes();
-    return `${month} ${day}, ${year} - ${hours}:${minutes}`;
-}
-
+const sortOrdersByDate = () => ordersData.sort((a,b) => new Date(b.createdOn).getTime() - new Date(a.createdOn).getTime());
 export class Orders extends Component {
     static propTypes = {
 
@@ -41,7 +30,7 @@ export class Orders extends Component {
     }
 
     componentDidMount () {
-        this.setState({ orders: ordersData })
+        this.setState({ orders: sortOrdersByDate() })
     }
 
     render() {

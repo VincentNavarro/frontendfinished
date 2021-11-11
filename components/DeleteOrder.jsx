@@ -5,11 +5,6 @@ function DeleteOrder({ data, actions }) {
     const { customerName } = data;
     const { clearSelected, confirmDelete, deleteOrder } = actions;
 
-    const handleClick = () => {
-        clearSelected()
-        deleteOrder()
-    };
-
     return (
         <div>
             <h1>{`Are you sure you want to delete ${customerName}'s order?`}</h1>
@@ -27,7 +22,7 @@ function DeleteOrder({ data, actions }) {
                 <button
                     type="button" 
                     className="deleteButton"
-                    onClick={confirmDelete()}
+                    onClick={() => confirmDelete()}
                 >
                     Trash it!
                 </button>
