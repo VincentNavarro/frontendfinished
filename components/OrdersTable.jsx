@@ -2,15 +2,15 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 const formatDate = (dateString) => {
-    const monthNames = ["January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"];
     const dateObj = new Date(dateString);
-    const month = monthNames[dateObj.getMonth()];
-    const day = String(dateObj.getDate()).padStart(2, '0');
-    const year = dateObj.getFullYear();
-    const hours = dateObj.getHours();
-    const minutes = dateObj.getMinutes();
-    return `${month} ${day}, ${year} - ${hours}:${minutes}`;
+
+    const locale = 'en-US';
+    const dateOptions = { month: "long", day: "numeric", year: "numeric" };
+    const timeOptions = { hour: '2-digit', minute: '2-digit' };
+
+    const dateFormatted = dateObj.toLocaleDateString(locale, dateOptions);
+    const timeFormatted = dateObj.toLocaleTimeString(locale, timeOptions).slice(0, -3);
+    return `${dateFormatted} - ${timeFormatted}`;
 }
 
 function OrdersTable({ data, actions }) {

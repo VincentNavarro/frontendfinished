@@ -1,11 +1,18 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+function calculateTotal(items, type) {
+    return items.reduce((total, item) => total += item[type], 0)
+}
+
+function formatCurrency(amount) {
+    return amount.toFixed(2);
+}
 function OrderDetailsTable({ data, actions }) {
     const { customerName, items } = data;
     const { clearSelected } = actions;
-    const totalQuantity = items.reduce((total, item) => total += item.quantity, 0);
-    const totalPrice = items.reduce((total, item) => total += (item.price/100), 0);
+    const totalQuantity = calculateTotal(items, 'quantity');
+    const totalPrice = calculateTotal(items, 'price')/100;
 
     return (
         <div>
@@ -35,7 +42,7 @@ function OrderDetailsTable({ data, actions }) {
                                 <td>{item.name}</td>
                                 <td>{item.size || 'n/a'}</td>
                                 <td>{item.quantity}</td>
-                                <td>{`$${item.price/100}`}</td>
+                                <td>{`$${formatCurrency(item.price/100)}`}</td>
                             </tr>
                     ))}
 
@@ -43,7 +50,7 @@ function OrderDetailsTable({ data, actions }) {
                         <td />
                         <td />
                         <td>{totalQuantity}</td>
-                        <td>{'$'+totalPrice}</td>
+                        <td>{'$'+formatCurrency(totalPrice)}</td>
                     </tr>
                 </tbody>
             </table>
